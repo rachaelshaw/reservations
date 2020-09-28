@@ -1,7 +1,27 @@
 <div id="reservations-overview" v-cloak>
 
-  <h1>TODO: Implement this page.</h1>
-  <p>(See also <em>assets/styles/pages/dashboard/reservations-overview.less</em>, <em>assets/js/pages/dashboard/reservations-overview.page.js</em>, and <em>api/controllers/dashboard/view-reservations-overview.js</em>.)</p>
+  <div class="container container-fluid pt-4 pb-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Guest name</th>
+          <th>Guest email</th>
+          <th>Party size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="reservation of reservations">
+          <td>{{reservation.startDate}}</td>
+          <td>{{reservation.startTime}}</td>
+          <td>{{reservation.guestName}}</td>
+          <td>{{reservation.guestEmailAddress}}</td>
+          <td>{{reservation.partySize}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
