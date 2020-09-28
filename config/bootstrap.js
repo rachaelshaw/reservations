@@ -74,10 +74,10 @@ module.exports.bootstrap = async function() {
   let TOMORROW_AT_6PM = require('moment-timezone').tz(`${TOMORROW} 18:00`, flavortown.tz).toDate().getTime();
   let TOMORROW_AT_715PM = require('moment-timezone').tz(`${TOMORROW} 19:15`, flavortown.tz).toDate().getTime();
   await Reservation.createEach([
-    { guestName: 'Ina Garten', guestEmailAddress: 'ina@example.com', partySize: 2, startsAt: TOMORROW_AT_1130AM },
-    { guestName: 'Rachael Ray', guestEmailAddress: 'rayray@example.com', partySize: 3, startsAt: TOMORROW_AT_6PM },
-    { guestName: 'Alton Brown', guestEmailAddress: 'alton@example.com', partySize: 4, startsAt: TOMORROW_AT_715PM },
-    { guestName: 'Giada De Laurentiis', guestEmailAddress: 'giada@example.com', partySize: 2, startsAt: TOMORROW_AT_715PM }
+    { guestName: 'Ina Garten', guestEmailAddress: 'ina@example.com', partySize: 2, startsAt: TOMORROW_AT_1130AM, restaurant: flavortown.id },
+    { guestName: 'Rachael Ray', guestEmailAddress: 'rayray@example.com', partySize: 3, startsAt: TOMORROW_AT_6PM, restaurant: flavortown.id },
+    { guestName: 'Alton Brown', guestEmailAddress: 'alton@example.com', partySize: 4, startsAt: TOMORROW_AT_715PM, restaurant: flavortown.id },
+    { guestName: 'Giada De Laurentiis', guestEmailAddress: 'giada@example.com', partySize: 2, startsAt: TOMORROW_AT_715PM, restaurant: flavortown.id }
   ]);
 
   // Save new bootstrap version
