@@ -17,6 +17,14 @@ module.exports = {
       required: true,
     },
 
+    tz: {
+      type: 'string',
+      required: true,
+      description: 'The time zone in which this restaurant\'s reservations are booked.',
+      custom: (tz) => require('moment-timezone').tz.names().includes(tz),
+      moreInfoUrl: 'https://en.wikipedia.org/wiki/List_of_tz_database_time_zones',
+    },
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
@@ -25,7 +33,7 @@ module.exports = {
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-    reservations: { collection: 'Reservation', via: 'restaurant'},
+    reservations: { collection: 'Reservation', via: 'restaurant' },
 
   },
 

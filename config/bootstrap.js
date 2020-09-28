@@ -15,7 +15,7 @@ module.exports.bootstrap = async function() {
   var path = require('path');
 
   // This bootstrap version indicates what version of fake data we're dealing with here.
-  var HARD_CODED_DATA_VERSION = 0;
+  var HARD_CODED_DATA_VERSION = 1;
 
   // This path indicates where to store/look for the JSON file that tracks the "last run bootstrap info"
   // locally on this development computer (if we happen to be on a development computer).
@@ -59,8 +59,25 @@ module.exports.bootstrap = async function() {
   }//∞
 
   // By convention, this is a good place to set up fake data during development.
-  await User.createEach([
-    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
+  let flavortown = await Restaurant.create({
+    name: 'Flavortown',
+    tz: 'America/Chicago'
+  }).fetch();
+  await User.create({
+    emailAddress: 'guy@example.com',
+    fullName: 'Guy Fieri',
+    password: await sails.helpers.passwords.hashPassword('abc123'),
+    restaurant: flavortown.id
+  });
+  let TOMORROW = require('moment-timezone').tz().add(1, 'days').format('YYYY-MM-DD');
+  let TOMORROW_AT_1130AM = require('moment-timezone').tz(`${TOMORROW} 11:30`, flavortown.tz).toDate().getTime();
+  let TOMORROW_AT_6PM = require('moment-timezone').tz(`${TOMORROW} 18:00`, flavortown.tz).toDate().getTime();
+  let TOMORROW_AT_715PM = require('moment-timezone').tz(`${TOMORROW} 19:15`, flavortown.tz).toDate().getTime();
+  await Reservation.createEach([
+    { guestName: 'Ina Garten', guestEmailAddress: 'ina@example.com', partySize: 2, startsAt: TOMORROW_AT_1130AM },
+    { guestName: 'Rachael Ray', guestEmailAddress: 'rayray@example.com', partySize: 3, startsAt: TOMORROW_AT_6PM },
+    { guestName: 'Alton Brown', guestEmailAddress: 'alton@example.com', partySize: 4, startsAt: TOMORROW_AT_715PM },
+    { guestName: 'Giada De Laurentiis', guestEmailAddress: 'giada@example.com', partySize: 2, startsAt: TOMORROW_AT_715PM }
   ]);
 
   // Save new bootstrap version
