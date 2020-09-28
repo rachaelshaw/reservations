@@ -4,16 +4,10 @@ module.exports = {
   friendlyName: 'View homepage or redirect',
 
 
-  description: 'Display or redirect to the appropriate homepage, depending on login status.',
+  description: 'Redirect to the appropriate homepage or login screen, depending on login status.',
 
 
   exits: {
-
-    success: {
-      statusCode: 200,
-      description: 'Requesting user is a guest, so show the public landing page.',
-      viewTemplatePath: 'pages/homepage'
-    },
 
     redirect: {
       responseType: 'redirect',
@@ -26,10 +20,10 @@ module.exports = {
   fn: async function () {
 
     if (this.req.me) {
-      throw {redirect:'/welcome'};
+      throw {redirect:'/reservations'};
+    } else {
+      throw {redirect:'/login'};
     }
-
-    return {};
 
   }
 
