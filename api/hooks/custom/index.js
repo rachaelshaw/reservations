@@ -185,6 +185,12 @@ will be disabled and/or hidden in the UI.
             }
             req.me = loggedInUser;
 
+            if (!loggedInUser.restaurant) {
+              throw new Error('A user should always be attached to a `restaurant`, but somehow the logged-in user doesn\'t have one!');
+            }
+            var myRestaurant = await Restaurant.findOne({id: loggedInUser.restaurant});
+            req.myRestaurant = myRestaurant;
+
             // If our "lastSeenAt" attribute for this user is at least a few seconds old, then set it
             // to the current timestamp.
             //
