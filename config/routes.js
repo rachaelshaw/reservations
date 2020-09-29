@@ -62,4 +62,5 @@ module.exports.routes = {
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
 
   'GET   /api/v1/reservations/schedule':                 { action: 'reservations/get-reservation-schedule' },
+  'POST  /api/v1/reservations':                          { action: 'reservations/create-reservation' },
 };
