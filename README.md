@@ -5,7 +5,7 @@ a [Sails v1](https://sailsjs.com) application
 
 ### How to test this out
 
-+ clone this app + run `npm install`
++ clone this app & run `npm install` in the project's directory
 + run `sails console`
 + go to `localhost:1337`
 + when prompted, log in as the example user: `guy.fieri@example.com`/`abc123`
