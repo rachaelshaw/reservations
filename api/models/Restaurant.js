@@ -33,13 +33,13 @@ module.exports = {
       description: 'A dictionary representing the total reservations available in each 15-minute time slot of the day.',
       // e.g.
       // {
-      //   '12:00am': 0,
-      //   '12:15am': 0,
-      //   '12:30am': 0,
+      //   '00:00': 0,
+      //   '00:15': 0,
+      //   '00:30': 0,
       //   …
-      //   '12:00pm': 3,
-      //   '12:15pm': 3,
-      //   '12:30pm': 3,
+      //   '12:00': 3,
+      //   '12:15': 3,
+      //   '12:30': 3,
       //   …
       // }
     }
