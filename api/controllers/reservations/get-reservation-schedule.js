@@ -58,8 +58,10 @@ module.exports = {
 
     // Now, build up our schedule information.
     let report = _.reduce(this.req.myRestaurant.reservationAvailability, (memo, inventory, startTime)=>{
-      if(inventory > 0) {
-        let reservationsStartingAtThisTime = reservations.filter((reservation)=>reservation.startTime === startTime);
+      let reservationsStartingAtThisTime = reservations.filter((reservation)=>reservation.startTime === startTime);
+      // We'll only include time slots that have inventory, OR that have existing reservations booked
+      // (so that changing the default availability doesn't prevent already-booked reservations from showing up)
+      if(inventory > 0 || reservationsStartingAtThisTime.length > 0) {
         memo[startTime] = {
           inventory,
           reservations: reservationsStartingAtThisTime,
