@@ -46,7 +46,7 @@
   <body>
     <div purpose="page-wrap">
       <header class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between" purpose="page-header">
-        <a style="cursor: pointer;" class="navbar-brand mr-0" href="/"><%= myRestaurant? myRestaurant.name : 'Reservations' %></a>
+        <a style="cursor: pointer;" class="navbar-brand mr-0" href="/"><%= me? myRestaurant.name : 'Reservations' %></a>
         <div class="navbar-nav flex-row">
           <!-- LOGGED-IN NAVIGATION -->
           <% if(me) { %>
