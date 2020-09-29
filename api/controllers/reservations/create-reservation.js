@@ -60,13 +60,13 @@ module.exports = {
   fn: async function ({startDate, startTime, guestName, guestEmailAddress, partySize}) {
     const moment = require('moment-timezone');
 
-    let startsAt = moment.tz(`${startDate} ${startTime}`, this.req.myRestaraunt.tz).toDate().getTime();
+    let startsAt = moment.tz(`${startDate} ${startTime}`, this.req.myRestaurant.tz).toDate().getTime();
 
     // First, check that we still have inventory available.
-    let availabileInventory = this.req.myRestaraunt.reservationAvailability[startTime];
+    let availabileInventory = this.req.myRestaurant.reservationAvailability[startTime];
     let totalExistingReservations = await Reservation.count({
       startsAt,
-      restaurant: this.req.myRestaraunt.id,
+      restaurant: this.req.myRestaurant.id,
     });
     // (We won't check for _exactly_ zero, since inventory can change after booking
     // to be lower than the # booked reservations.)
@@ -80,7 +80,7 @@ module.exports = {
       guestEmailAddress,
       partySize,
       startsAt,
-      restaurant: this.req.myRestaraunt.id
+      restaurant: this.req.myRestaurant.id
     }).fetch();
 
     return reservation.id;

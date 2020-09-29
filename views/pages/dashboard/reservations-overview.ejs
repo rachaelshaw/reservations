@@ -33,5 +33,53 @@
     </div>
   </div>
   <ajax-overlay :syncing="syncing"></ajax-overlay>
+
+  <modal v-if="modal === 'create-reservation'" @close="closeModal()" v-cloak>
+    <div class="modal-header">
+      <h2 class="modal-title">Book reservation</h2>
+    </div>
+    <ajax-form action="createReservation" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedCreateReservation($event)">
+      <div class="modal-body">
+        <div class="row">
+          <div class="form-group col-md">
+            <label for="guest-name">Name</label>
+            <input type="text" id="guest-name" class="form-control" :class="[formErrors.guestName ? 'is-invalid' : '']" v-model.trim="formData.guestName">
+            <div class="invalid-feedback" v-if="formErrors.guestName">Guest name is required.</div>
+          </div>
+          <div class="form-group col-md">
+            <label for="guest-email">Email</label>
+            <input type="email" id="guest-email" class="form-control" :class="[formErrors.guestEmailAddress ? 'is-invalid' : '']" v-model.trim="formData.guestEmailAddress">
+            <div class="invalid-feedback" v-if="formErrors.guestEmailAddress">A valid email is required.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-2 col-sm">
+            <label for="party-size">Party Size</label>
+            <select id="party-size" class="form-control" v-model="formData.partySize">
+              <option :value="option" v-for="option of partySizeOptions">{{option}}</option>
+            </select>
+          </div>
+          <div class="form-group col-sm">
+            <label for="start-date">Date</label>
+            <select id="start-date" class="form-control" v-model="formData.startDate">
+              <option :value="option.value" v-for="option of startDateOptions">{{option.displayName}}</option>
+            </select>
+          </div>
+          <div class="form-group col-sm">
+            <label for="start-time">Time</label>
+            <select id="start-time" class="form-control" v-model="formData.startTime">
+              <option v-for="option of startTimeOptions">{{option}}</option>
+            </select>
+          </div>
+        </div>
+        <cloud-error class="pt-5 text-center" v-if="cloudError === 'unavailable'">The specified time slot is completely booked up.</cloud-error>
+        <cloud-error class="pt-5 text-center" v-else-if="cloudError"></cloud-error>
+      </div>
+      <div class="modal-footer flex-row-reverse justify-content-between">
+        <ajax-button :syncing="syncing" class="btn btn-primary ml-3">Book</ajax-button>
+        <button type="button" class="btn btn-outline-danger mr-3" data-dismiss="modal">Cancel</button>
+      </div>
+    </ajax-form>
+  </modal>
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
