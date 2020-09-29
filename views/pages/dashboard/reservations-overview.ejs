@@ -7,8 +7,9 @@
       <div class="card mb-2">
         <div class="card-header" :class="details.reservations.length === 0 ? 'border-bottom-0' : ''">
           {{timeSlot}}
-          <span class="ml-2 badge badge-dark text-uppercase" v-if="details.inventory - details.reservations.length === 0">Fully booked</span>
+          <span class="ml-2 badge badge-dark text-uppercase" v-if="details.inventory - details.reservations.length < 1">Fully booked</span>
           <span class="ml-2 badge badge-success" v-else>{{details.inventory - details.reservations.length}} available</span>
+          <button class="btn btn-sm btn-primary float-right" @click="clickBookButton(timeSlot)" v-if="details.inventory - details.reservations.length >= 1">+ Book</button>
         </div>
         <div class="card-body" v-if="details.reservations.length > 0">
           <table class="table table-borderless">

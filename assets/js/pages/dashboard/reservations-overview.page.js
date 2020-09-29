@@ -30,7 +30,7 @@ parasails.registerPage('reservations-overview', {
     // console.log('schedule »',this.schedule);
     // Build up the options for our dropdown menus.
     this.startTimeOptions = _.keys(this.schedule);
-    // console.log('startTimeOptions »',this.startTimeOptions);
+    console.log('startTimeOptions »',this.startTimeOptions);
     this.startDateOptions = [{value: moment().format('YYYY-MM-DD'), displayName: moment().format('ddd DD/MM')}];
     // We'll allow for booking today + the next 30 days
     while(this.startDateOptions.length <= 30) {
@@ -40,7 +40,7 @@ parasails.registerPage('reservations-overview', {
         displayName: moment(previousOption.value).add(1, 'days').format('ddd DD/MM')
       });
     }
-    // console.log('startDateOptions »',this.startDateOptions);
+    console.log('startDateOptions »',this.startDateOptions);
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -51,13 +51,17 @@ parasails.registerPage('reservations-overview', {
     clickPreviousButton: async function() {
       this.scheduleStartsOn = moment(this.scheduleStartsOn).subtract(1, 'days').format('YYYY-MM-DD');
       await this._getReservationSchedule();
-      this.scheduleDisplayDate = moment(this.scheduleStartsOn).format('ddd DD/MM');
+      this.scheduleDisplayDate = moment(this.scheduleStartsOn).format('ddd MM/DD');
     },
 
     clickNextButton: async function() {
       this.scheduleStartsOn = moment(this.scheduleStartsOn).add(1, 'days').format('YYYY-MM-DD');
       await this._getReservationSchedule();
       this.scheduleDisplayDate = moment(this.scheduleStartsOn).format('ddd MM/DD');
+    },
+
+    clickBookButton: function(timeSlot) {
+      console.log(`TODO: open modal + pre-fill date to ${this.scheduleStartsOn} & time to ${timeSlot}`);
     },
 
     _getReservationSchedule: async function() {
