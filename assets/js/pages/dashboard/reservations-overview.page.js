@@ -41,13 +41,13 @@ parasails.registerPage('reservations-overview', {
     // Build up the options for our dropdown menus.
     this.startTimeOptions = _.keys(this.schedule);
     console.log('startTimeOptions »',this.startTimeOptions);
-    this.startDateOptions = [{value: moment().format('YYYY-MM-DD'), displayName: moment().format('ddd DD/MM')}];
+    this.startDateOptions = [{value: moment().format('YYYY-MM-DD'), displayName: moment().format('ddd MM/DD')}];
     // We'll allow for booking today + the next 30 days
     while(this.startDateOptions.length <= 30) {
       let previousOption = _.last(this.startDateOptions);
       this.startDateOptions.push({
         value: moment(previousOption.value).add(1, 'days').format('YYYY-MM-DD'),
-        displayName: moment(previousOption.value).add(1, 'days').format('ddd DD/MM')
+        displayName: moment(previousOption.value).add(1, 'days').format('ddd MM/DD')
       });
     }
     console.log('startDateOptions »',this.startDateOptions);
