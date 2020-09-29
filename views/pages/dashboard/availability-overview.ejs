@@ -1,7 +1,29 @@
 <div id="availability-overview" v-cloak>
+  <div class="container container-fluid pt-5 pb-5">
+    <h3 class="my-3">Manage availability</h3>
+    <ajax-form :handle-submitting="handleSubmitting" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+      <div class="row mb-3" v-for="(inventory, timeSlot) in myRestaurant.reservationAvailability" :key="'availability-row--'+timeSlot">
+        <div class="col-3 col-md-2">
+          <label :for="'availability--'+timeSlot" class="pt-2">{{timeSlot}}</label>
+        </div>
+        <div class="col col-md-3">
+          <input type="number" :id="'availability--'+timeSlot" class="form-control" v-model="formData[timeSlot]" @input="inputFormField()">
+        </div>
+      </div>
+      <cloud-error class="pt-5 text-center" v-if="cloudError"></cloud-error>
+      <div class="card bg-success text-light" v-else-if="cloudSuccess">
+        <div class="card-body">
+          <p class="mb-0">The reservation availability for {{myRestaurant.name}} has been updated.</p>
+          <p class="mb-0">(This will not affect existing bookings.)</p>
+        </div>
+      </div>
+      <div class="mt-4 d-flex flex-row-reverse justify-content-between">
+        <ajax-button :syncing="syncing" class="btn btn-primary">Save</ajax-button>
+        <a href="/reservations" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </ajax-form>
+  </div>
 
-  <h1>TODO: Implement this page.</h1>
-  <p>(See also <em>assets/styles/pages/dashboard/availability-overview.less</em>, <em>assets/js/pages/dashboard/availability-overview.page.js</em>, and <em>api/controllers/dashboard/view-availability-overview.js</em>.)</p>
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

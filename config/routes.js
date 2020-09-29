@@ -63,4 +63,6 @@ module.exports.routes = {
 
   'GET   /api/v1/reservations/schedule':                 { action: 'reservations/get-reservation-schedule' },
   'POST  /api/v1/reservations':                          { action: 'reservations/create-reservation' },
+
+  'PATCH /api/v1/restaurant/update-availability':       { action: 'restaurant/update-availability' },
 };

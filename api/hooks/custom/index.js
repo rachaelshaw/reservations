@@ -231,6 +231,7 @@ will be disabled and/or hidden in the UI.
               }//ﬁ
 
               res.locals.me = sanitizedUser;
+              res.locals.myRestaurant = myRestaurant;
 
               // Include information on the locals as to whether billing features
               // are enabled for this app, and whether email verification is required.
