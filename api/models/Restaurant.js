@@ -60,7 +60,7 @@ module.exports = {
     let hour = 0;
     let minutes = 0;
     while(hour < 24) {
-      let key = `${hour === 0? 12 : hour > 12? hour-12 : hour}:${minutes === 0? '00' : minutes}${hour > 12? 'pm' : 'am'}`;
+      let key = `${_.padLeft(''+hour, 2, '0')}:${minutes === 0? '00' : minutes}`;
       availability[key] = 0;
       if(minutes === 45) {
         hour++;
@@ -69,6 +69,16 @@ module.exports = {
         minutes += 15;
       }
     }
+    // while(hour < 24) {
+    //   let key = `${hour === 0? 12 : hour > 12? hour-12 : hour}:${minutes === 0? '00' : minutes}${hour > 12? 'pm' : 'am'}`;
+    //   availability[key] = 0;
+    //   if(minutes === 45) {
+    //     hour++;
+    //     minutes = 0;
+    //   } else {
+    //     minutes += 15;
+    //   }
+    // }
     valuesToSet.reservationAvailability = availability;
     return proceed();
   }

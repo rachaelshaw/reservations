@@ -67,7 +67,7 @@ module.exports.bootstrap = async function() {
   }).fetch();
   // Update our restaraunt's reservation inventory.
   let reservationAvailability = _.extend(flavortown.reservationAvailability,
-    {'11:00am': 3, '11:15am': 3, '11:30am': 3, '11:45am': 3, '12:00pm': 3, '12:15pm': 3, '12:30pm': 3, '12:45pm': 3, '1:00pm': 3, '1:15pm': 3, '1:30pm': 3, '1:45pm': 3, '5:00pm': 3, '5:15pm': 3, '5:30pm': 3, '5:45pm': 3, '6:00pm': 3, '6:15pm': 3, '6:30pm': 3, '6:45pm': 3, '7:00pm': 3, '7:15pm': 3, '7:30pm': 3, '7:45pm': 3, '8:00pm': 3, '8:15pm': 3, '8:30pm': 3, '8:45pm': 3,}
+    {'11:00': 3, '11:15': 3, '11:30': 3, '11:45': 3, '12:00': 3, '12:15': 3, '12:30': 3, '12:45': 3, '13:00': 3, '13:15': 3, '13:30': 3, '13:45': 3, '17:00': 3, '17:15': 3, '17:30': 3, '17:45': 3, '18:00': 3, '18:15': 3, '18:30': 3, '18:45': 3, '19:00': 3, '19:15': 3, '19:30': 3, '19:45': 3, '20:00': 3, '20:15': 3, '20:30': 3, '20:45': 3,}
   );
   await Restaurant.updateOne({id: flavortown.id}).set({reservationAvailability});
 

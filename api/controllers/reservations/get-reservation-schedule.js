@@ -52,16 +52,17 @@ module.exports = {
       ]
     });
     reservations = reservations.map((reservation)=> {
-      reservation.startTime = moment(reservation.startsAt).tz(this.req.myRestaurant.tz).format('h:mma');
+      reservation.startTime = moment(reservation.startsAt).tz(this.req.myRestaurant.tz).format('HH:mm');
       return reservation;
     });
 
     // Now, build up our schedule information.
-    let report = _.reduce(this.req.myRestaurant.reservationAvailability, (memo, inventory, time)=>{
+    let report = _.reduce(this.req.myRestaurant.reservationAvailability, (memo, inventory, startTime)=>{
       if(inventory > 0) {
-        memo[time] = {
+        let reservationsStartingAtThisTime = reservations.filter((reservation)=>reservation.startTime === startTime);
+        memo[startTime] = {
           inventory,
-          reservations: reservations.filter((reservation)=>reservation.startTime === time)
+          reservations: reservationsStartingAtThisTime,
         };
       }
       return memo;
