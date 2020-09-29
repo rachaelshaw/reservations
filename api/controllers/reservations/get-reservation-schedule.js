@@ -21,15 +21,16 @@ module.exports = {
   exits: {
 
     success: {
-      outputFriendlyName: 'Reservation Schedule',
-      outputExample: [
-        {
-          startTime: '11:30am',
+      outputFriendlyName: 'Report',
+      outputExample:
+      {
+        '11:30am': {
+          inventory: 3,
           reservations: [
             { id: 99, /*…*/ }
           ]
         }
-      ],
+      },
     }
 
   },
@@ -40,7 +41,7 @@ module.exports = {
 
     let scheduleStartsAt = moment.tz(`${startsOn} 00:00`, this.req.myRestaurant.tz).toDate().getTime();
     let scheduleEndsAt = scheduleStartsAt + 24*60*60*1000;//« add 24 hours
-    // ^^ FUTURE: instead of the entire day, this could be limited to configured business hours.
+
 
     // Get our booked reservations for the selected day.
     let reservations = await Reservation.find({
@@ -51,23 +52,24 @@ module.exports = {
       ]
     });
     reservations = reservations.map((reservation)=> {
-      reservation.startTime = moment(reservation.startsAt).tz(this.req.myRestaurant.tz).format('hh:mma');
+      reservation.startTime = moment(reservation.startsAt).tz(this.req.myRestaurant.tz).format('h:mma');
       return reservation;
     });
 
-    // Now, build up our schedule.
-    let schedule = [];
-    let nextTimeSlotStartsAt = scheduleStartsAt;
-    while(nextTimeSlotStartsAt < scheduleEndsAt) {
-      let startTime = moment(nextTimeSlotStartsAt).tz(this.req.myRestaurant.tz).format('hh:mma');
-      schedule.push({
-        startTime,
-        reservations: reservations.filter((reservation)=>reservation.startTime === startTime)
-      });
-      nextTimeSlotStartsAt += 15*60*1000;//« add fifteen minutes
-    }
+    // Now, build up our schedule information.
+    let report = _.reduce(this.req.myRestaurant.reservationAvailability, (memo, inventory, time)=>{
+      if(inventory > 0) {
+        memo[time] = {
+          inventory,
+          reservations: reservations.filter((reservation)=>reservation.startTime === time)
+        };
+      }
+      return memo;
+    }, {});
 
-    return schedule;
+    // console.log('report',report);
+
+    return report;
 
   }
 

@@ -59,16 +59,27 @@ module.exports.bootstrap = async function() {
   }//∞
 
   // By convention, this is a good place to set up fake data during development.
+  //
+  // First, create our restaurant:
   let flavortown = await Restaurant.create({
     name: 'Flavortown',
     tz: 'America/Chicago'
   }).fetch();
+  // Update our restaraunt's reservation inventory.
+  let reservationAvailability = _.extend(flavortown.reservationAvailability,
+    {'11:00am': 3, '11:15am': 3, '11:30am': 3, '11:45am': 3, '12:00pm': 3, '12:15pm': 3, '12:30pm': 3, '12:45pm': 3, '1:00pm': 3, '1:15pm': 3, '1:30pm': 3, '1:45pm': 3, '5:00pm': 3, '5:15pm': 3, '5:30pm': 3, '5:45pm': 3, '6:00pm': 3, '6:15pm': 3, '6:30pm': 3, '6:45pm': 3, '7:00pm': 3, '7:15pm': 3, '7:30pm': 3, '7:45pm': 3, '8:00pm': 3, '8:15pm': 3, '8:30pm': 3, '8:45pm': 3,}
+  );
+  await Restaurant.updateOne({id: flavortown.id}).set({reservationAvailability});
+
+  // Next, add a user:
   await User.create({
     emailAddress: 'guy@example.com',
     fullName: 'Guy Fieri',
     password: await sails.helpers.passwords.hashPassword('abc123'),
     restaurant: flavortown.id
   });
+
+  // Finally, add some existing reservations:
   let TOMORROW = require('moment-timezone').tz().add(1, 'days').format('YYYY-MM-DD');
   let TOMORROW_AT_1130AM = require('moment-timezone').tz(`${TOMORROW} 11:30`, flavortown.tz).toDate().getTime();
   let TOMORROW_AT_6PM = require('moment-timezone').tz(`${TOMORROW} 18:00`, flavortown.tz).toDate().getTime();

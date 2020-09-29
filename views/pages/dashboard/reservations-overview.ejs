@@ -3,12 +3,14 @@
 
   <div class="container container-fluid pt-5 pb-5" v-if="schedule">
     <h3 class="mt-3"><button class="btn btn-sm btn-primary mr-2" @click="clickPreviousButton()">«</button>{{scheduleDisplayDate}}<button class="btn btn-sm btn-primary ml-2" @click="clickNextButton()">»</button></h3>
-    <div v-for="timeSlot of schedule" :key="timeSlot.startTime">
+    <div v-for="(details, timeSlot) of schedule" :key="timeSlot">
       <div class="card mb-2">
-        <div class="card-header" :class="timeSlot.reservations.length === 0 ? 'border-bottom-0' : ''">
-          {{timeSlot.startTime}}
+        <div class="card-header" :class="details.reservations.length === 0 ? 'border-bottom-0' : ''">
+          {{timeSlot}}
+          <span class="ml-2 badge badge-dark text-uppercase" v-if="details.inventory - details.reservations.length === 0">Fully booked</span>
+          <span class="ml-2 badge badge-success" v-else>{{details.inventory - details.reservations.length}} available</span>
         </div>
-        <div class="card-body" v-if="timeSlot.reservations.length > 0">
+        <div class="card-body" v-if="details.reservations.length > 0">
           <table class="table table-borderless">
             <thead>
               <tr>
@@ -18,7 +20,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="reservation of timeSlot.reservations" :key="timeSlot.startTime+'--'+reservation.guestEmailAddress">
+              <tr v-for="reservation of details.reservations" :key="timeSlot+'--'+reservation.guestEmailAddress">
                 <td>{{reservation.guestName}}</td>
                 <td>{{reservation.guestEmailAddress}}</td>
                 <td>{{reservation.partySize}}</td>

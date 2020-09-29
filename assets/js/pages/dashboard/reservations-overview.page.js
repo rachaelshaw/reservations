@@ -27,9 +27,10 @@ parasails.registerPage('reservations-overview', {
   },
   mounted: async function() {
     await this._getReservationSchedule();
-    // Build up the options for out dropdown menus.
-    this.startTimeOptions = _.pluck(this.schedule, 'startTime');
-    console.log('startTimeOptions »',this.startTimeOptions);
+    // console.log('schedule »',this.schedule);
+    // Build up the options for our dropdown menus.
+    this.startTimeOptions = _.keys(this.schedule);
+    // console.log('startTimeOptions »',this.startTimeOptions);
     this.startDateOptions = [{value: moment().format('YYYY-MM-DD'), displayName: moment().format('ddd DD/MM')}];
     // We'll allow for booking today + the next 30 days
     while(this.startDateOptions.length <= 30) {
@@ -39,7 +40,7 @@ parasails.registerPage('reservations-overview', {
         displayName: moment(previousOption.value).add(1, 'days').format('ddd DD/MM')
       });
     }
-    console.log('startDateOptions »',this.startDateOptions);
+    // console.log('startDateOptions »',this.startDateOptions);
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
