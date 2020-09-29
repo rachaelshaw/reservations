@@ -1,15 +1,14 @@
 # reservations
 
 a [Sails v1](https://sailsjs.com) application
-
-
-### Links
-
 + [Sails framework documentation](https://sailsjs.com/get-started)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
+
+### How to test this out
+
++ clone this app + run `npm install`
++ run `sails console`
++ go to `localhost:1337`
++ when prompted, log in as the example user: `guy.fieri@example.com`/`abc123`
 
 
 ### Version info
