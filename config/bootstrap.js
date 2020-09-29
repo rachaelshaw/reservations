@@ -65,7 +65,7 @@ module.exports.bootstrap = async function() {
     name: 'Flavortown',
     tz: 'America/Chicago'
   }).fetch();
-  // Update our restaraunt's reservation inventory.
+  // Update our restaurant's reservation inventory.
   let reservationAvailability = _.extend(flavortown.reservationAvailability,
     {'11:00': 3, '11:15': 3, '11:30': 3, '11:45': 3, '12:00': 3, '12:15': 3, '12:30': 3, '12:45': 3, '13:00': 3, '13:15': 3, '13:30': 3, '13:45': 3, '17:00': 3, '17:15': 3, '17:30': 3, '17:45': 3, '18:00': 3, '18:15': 3, '18:30': 3, '18:45': 3, '19:00': 3, '19:15': 3, '19:30': 3, '19:45': 3, '20:00': 3, '20:15': 3, '20:30': 3, '20:45': 3,}
   );
